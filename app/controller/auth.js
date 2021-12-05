@@ -17,10 +17,20 @@ class AuthController extends Controller {
     });
     this.ctx.session.captcha = captcha.text;
     this.ctx.response.type = 'image/svg+xml';
-    this.ctx.body = { img:captcha.data, uuid: uuidv1() }
+    const uuid = uuidv1();
+    const code = captcha.text
+    global[uuid] = code;
+    this.ctx.body = { img: captcha.data, uuid }
   }
   async login() {
-    this.ctx.body = 'hi, welcom Bulin Zhang to login ';
+    const { uuid, code } = this.ctx.request.body;
+    if (global[uuid] === code) {
+      this.ctx.body = 'hi, welcom Bulin Zhang to login ';
+
+    } else {
+      this.ctx.body = 'invalid captcha code!'
+    }
+
   }
 }
 
