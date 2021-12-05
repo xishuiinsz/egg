@@ -17,7 +17,11 @@ module.exports = appInfo => {
 
   // add your middleware config here
   config.middleware = [];
-
+  config.security = {
+    csrf: {
+      headerName: 'x-csrf-token', // 通过 header 传递 CSRF token 的默认字段为 x-csrf-token
+    }
+  }
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
